@@ -8,7 +8,7 @@
 
 ### About Us
 
-Welcome to **Miri Foods LLC**, your trusted partner in importing and distributing high-quality food products. We specialize in bringing premium ingredients from India, Turkey, the United States, and Canada to your kitchen. Established in 2015 as a minority-owned small business, Miri Foods began with a single product for the HORECA market. Today, we proudly serve over 1200 products to restaurants, cafes and hotels across New York, New Jersey, and Connecticut.
+Welcome to **Miri Foods LLC**, your trusted partner in importing and distributing high-quality food products. We specialize in bringing premium ingredients from India, the United States, and Canada to your kitchen. Established in 2015 as a minority-owned small business, Miri Foods began with a single product for the HORECA market. Today, we proudly serve over 1200 products to restaurants, cafes and hotels across New York, New Jersey, and Connecticut.
 
 ### Our Products
 
