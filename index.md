@@ -22,6 +22,10 @@ Our product categories include:
 - **Premium Rice**
 - **Paper and Packaging Supplies**
 
+### Product List
+
+You can view our full product list [here](mirifoods-productlist.pdf).
+
 ### Why Choose Miri Foods?
 
 - **Exceptional Quality:** We’re committed to providing only top-tier products that meet the demands of your kitchen.
