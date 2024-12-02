@@ -1,8 +1,8 @@
 # Welcome to Miri Foods
 
-**Product List**:[Download](mirifoods-productlist.pdf)
-**Phone:** [516-816-3436](tel:5168163436)  
-**Email:** [mirifoods@gmail.com](mailto:mirifoods@gmail.com)
+**Product List**:[Download](mirifoods-productlist.pdf)<br>
+**Phone:** [516-816-3436](tel:5168163436)<br>
+**Email:** [mirifoods@gmail.com](mailto:mirifoods@gmail.com)<br>
 **Warehouse Address:** 5-03 Burns Ave, Hicksville, NY 11801  
 
 ---
