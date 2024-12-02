@@ -1,6 +1,6 @@
 # Welcome to Miri Foods
 
-**Product List**:[Download](mirifoods-productlist.pdf)<br>
+**Product List**: [Download](mirifoods-productlist.pdf)<br>
 **Phone:** [516-816-3436](tel:5168163436)<br>
 **Email:** [mirifoods@gmail.com](mailto:mirifoods@gmail.com)<br>
 **Warehouse Address:** 5-03 Burns Ave, Hicksville, NY 11801  
@@ -13,7 +13,7 @@ At **Miri Foods**, we pride ourselves on being more than just suppliers—we’r
 
 ### Our Products
 
-Our specialty lies in sourcing and distributing premium brands and ingredients you can trust. Miri Foods is proud to carry well-known brands like Sach Paneer, Amul, Ashoka, MDH, Shan, Nanak, Haldiram, Babco, Rajbhog, Farmland Dairies, Endico, and more. Each brand is selected with quality and authenticity in mind, ensuring you have access to the best for your culinary creations.
+Our specialty lies in sourcing and distributing premium brands and ingredients you can trust. Miri Foods is proud to carry well-known brands like **Sach Paneer, Amul, Ashoka, MDH, Shan, Nanak, Haldiram, Babco, Rajbhog, Farmland Dairies, Endico**, and more. Each brand is selected with quality and authenticity in mind, ensuring you have access to the best for your culinary creations.
 
 Our product categories include:
 
