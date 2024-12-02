@@ -1,14 +1,15 @@
-# Welcome to Miri Foods LLC
+# Welcome to Miri Foods
 
+[Product List](mirifoods-productlist.pdf)
 **Phone:** [516-816-3436](tel:5168163436)  
-**Email:** [inders60@yahoo.com](mailto:inders60@yahoo.com)  
+**Email:** [mirifoods@gmail.com](mailto:mirifoods@gmail.com)
 **Warehouse Address:** 5-03 Burns Ave, Hicksville, NY 11801  
 
 ---
 
 ### About Us
 
-At **Miri Foods LLC**, we pride ourselves on being more than just suppliers—we’re partners in bringing the rich, authentic flavors of South Asia to your kitchens. With over 30 years of firsthand experience in the restaurant business, we know what keeps a kitchen running smoothly every day. Founded in 2015 as a minority-owned small business, Miri Foods began with a single product. Today, our inventory has grown to over 1200 essential items, carefully curated to meet the evolving needs of restaurants, cafes, and hotels across the Tri-State Area (NY/NJ/CT).
+At **Miri Foods**, we pride ourselves on being more than just suppliers—we’re partners in bringing the rich, authentic flavors of South Asia to your kitchens. With over 30 years of firsthand experience in the restaurant business, we know what keeps a kitchen running smoothly every day. Founded in 2015 as a minority-owned small business, Miri Foods began with a single product. Today, our inventory has grown to over 1200 essential items, carefully curated to meet the evolving needs of restaurants, cafes, and hotels across the Tri-State Area (NY/NJ/CT).
 
 ### Our Products
 
@@ -35,3 +36,5 @@ You can view our full product list [here](mirifoods-productlist.pdf).
 ---
 
 For more information or to place an order, reach out at [516-816-3436](tel:5168163436) or [inders60@yahoo.com](mailto:inders60@yahoo.com). Let’s work together to make every dish unforgettable with the authentic ingredients your customers crave.
+
+<p style="text-align: center; font-size: 0.8em;">Miri Foods DBA Mahi Foods LLC © 2024</p>
