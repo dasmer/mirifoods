@@ -35,6 +35,7 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         padding: 2rem;
         border-radius: 8px;
+        max-width: 100%;
       }
       h1, h3 {
         color: var(--bs-dark);
@@ -60,99 +61,68 @@
     </style>
   </head>
   <body>
-    <div class="container py-3">
-      <header class="text-center mb-4">
-        <h1 class="fw-light">Welcome to Miri Foods</h1>
-        <a href="/mirifoods-productlist.pdf" class="btn btn-primary">Download Product List</a><br>
-      </header>
+    <div class="container-fluid py-3">
+      <div class="container">
+        <header class="text-center mb-4">
+          <h1 class="fw-light">Welcome to Miri Foods</h1>
+          <a href="/mirifoods-productlist.pdf" class="btn btn-primary">Download Product List</a><br>
+        </header>
 
-      <section class="mb-4">
-        <h3>Contact Information</h3>
-        <p>
-          <strong>Phone:</strong> 
-          <a href="tel:5168163436" class="text-decoration-none">516-816-3436</a><br>
-          <strong>Email:</strong> 
-          <a href="mailto:mirifoods@gmail.com" class="text-decoration-none">mirifoods@gmail.com</a><br>
-          <strong>Warehouse Address:</strong> 5-03 Burns Ave, Hicksville, NY 11801
-        </p>
-        <hr>
-      </section>
+        <section class="mb-4">
+          <h3>Contact Information</h3>
+          <p>
+            <strong>Phone:</strong> 
+            <a href="tel:5168163436" class="text-decoration-none">516-816-3436</a><br>
+            <strong>Email:</strong> 
+            <a href="mailto:mirifoods@gmail.com" class="text-decoration-none">mirifoods@gmail.com</a><br>
+            <strong>Warehouse Address:</strong> 5-03 Burns Ave, Hicksville, NY 11801
+          </p>
+          <hr>
+        </section>
 
-      <section id="about-us" class="mb-4">
-        <h3>About Us</h3>
-        <p>
-          At <strong>Miri Foods</strong>, we pride ourselves on being more than just suppliers—we’re partners in bringing the rich, authentic flavors of South Asia to your kitchens. With over 30 years of firsthand experience in the restaurant business, we know what keeps a kitchen running smoothly every day. Founded in 2015 as a minority-owned small business, Miri Foods began with a single product. Today, our inventory has grown to over 1200 essential items, carefully curated to meet the evolving needs of restaurants, cafes, and hotels across the Tri-State Area (NY/NJ/CT).
-        </p>
-      </section>
+        <section id="about-us" class="mb-4">
+          <h3>About Us</h3>
+          <p>
+            At <strong>Miri Foods</strong>, we pride ourselves on being more than just suppliers—we’re partners in bringing the rich, authentic flavors of South Asia to your kitchens. With over 30 years of firsthand experience in the restaurant business, we know what keeps a kitchen running smoothly every day. Founded in 2015 as a minority-owned small business, Miri Foods began with a single product. Today, our inventory has grown to over 1200 essential items, carefully curated to meet the evolving needs of restaurants, cafes, and hotels across the Tri-State Area (NY/NJ/CT).
+          </p>
+        </section>
 
-<section id="our-products" class="mb-4">
-  <h3>Our Products</h3>
-  <!-- <div class="row justify-content-center mb-4">
-    <div id="product-carousel" class="carousel slide col-lg-5" data-bs-ride="carousel" data-bs-interval="3000">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#product-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#product-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#product-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        <button type="button" data-bs-target="#product-carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <section id="our-products" class="mb-4">
+          <h3>Our Products</h3>
+          <p>
+            Our specialty lies in sourcing and distributing premium brands and ingredients you can trust. Miri Foods is proud to carry well-known brands like <strong>Sach Paneer, Amul, Ashoka, MDH, Shan, Nanak, Haldiram, Babco, Rajbhog, Farmland Dairies, Endico</strong>, and more. Each brand is selected with quality and authenticity in mind, ensuring you have access to the best for your culinary creations.
+          </p>
+          <p>Our product categories include:</p>
+          <ul class="ms-3">
+            <li>Paneer and Dairy Essentials</li>
+            <li>Frozen Supplies</li>
+            <li>Authentic Spices</li>
+            <li>Premium Rice</li>
+            <li>Paper and Packaging Supplies</li>
+          </ul>
+        </section>
+
+        <section id="why-choose-miri-foods" class="mb-4">
+          <h3>Why Choose Miri Foods?</h3>
+          <ul class="ms-3">
+            <li><strong>Exceptional Quality:</strong> We’re committed to providing only top-tier products that meet the demands of your kitchen.</li>
+            <li><strong>Unmatched Reliability:</strong> Backed by decades of expertise, our team is dedicated to ensuring your orders are timely and dependable.</li>
+            <li><strong>Extensive Range:</strong> We offer a wide range of products, from frozen ingredients to dairy and spices.</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>
+            For more information or to place an order, reach out at 
+            <a href="tel:5168163436" class="text-decoration-none">516-816-3436</a> 
+            or 
+            <a href="mailto:mirifoods@gmail.com" class="text-decoration-none">mirifoods@gmail.com</a>. Let’s work together to make every dish unforgettable with the authentic ingredients your customers crave.
+          </p>
+          <footer class="text-center text-muted mt-5">
+            Miri Foods DBA Mahi Foods LLC © 2024
+          </footer>
+        </section>
       </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="images/sach.webp" class="d-block w-100 img-thumbnail" alt="Sach Paneer">
-        </div>
-        <div class="carousel-item">
-          <img src="images/rice.webp" class="d-block w-100 img-thumbnail" alt="Rice">
-        </div>
-        <div class="carousel-item">
-          <img src="images/gulabjamun.webp" class="d-block w-100 img-thumbnail" alt="Gulab Jamun">
-        </div>
-        <div class="carousel-item">
-          <img src="images/samosas.webp" class="d-block w-100 img-thumbnail" alt="Samosas">
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#product-carousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#product-carousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  </div> -->
-  <p>
-    Our specialty lies in sourcing and distributing premium brands and ingredients you can trust. Miri Foods is proud to carry well-known brands like <strong>Sach Paneer, Amul, Ashoka, MDH, Shan, Nanak, Haldiram, Babco, Rajbhog, Farmland Dairies, Endico</strong>, and more. Each brand is selected with quality and authenticity in mind, ensuring you have access to the best for your culinary creations.
-  </p>
-  <p>Our product categories include:</p>
-  <ul class="ms-3">
-    <li>Paneer and Dairy Essentials</li>
-    <li>Frozen Supplies</li>
-    <li>Authentic Spices</li>
-    <li>Premium Rice</li>
-    <li>Paper and Packaging Supplies</li>
-  </ul>
-</section>
-
-   <section id="why-choose-miri-foods" class="mb-4">
-  <h3>Why Choose Miri Foods?</h3>
-  <ul class="ms-3">
-    <li><strong>Exceptional Quality:</strong> We’re committed to providing only top-tier products that meet the demands of your kitchen.</li>
-    <li><strong>Unmatched Reliability:</strong> Backed by decades of expertise, our team is dedicated to ensuring your orders are timely and dependable.</li>
-    <li><strong>Extensive Range:</strong> We offer a wide range of products, from frozen ingredients to dairy and spices.</li>
-  </ul>
-</section>
-
-
-      <section>
-        <p>
-          For more information or to place an order, reach out at 
-          <a href="tel:5168163436" class="text-decoration-none">516-816-3436</a> 
-          or 
-          <a href="mailto:mirifoods@gmail.com" class="text-decoration-none">mirifoods@gmail.com</a>. Let’s work together to make every dish unforgettable with the authentic ingredients your customers crave.
-        </p>
-        <footer class="text-center text-muted mt-5">
-          Miri Foods DBA Mahi Foods LLC © 2024
-        </footer>
-      </section>
     </div>
 
     <!-- Bootstrap JS -->
