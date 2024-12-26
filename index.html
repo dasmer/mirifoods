@@ -11,19 +11,18 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="/assets/css/style.css?v=9c83edd45fffbb7a28cee26b9dde012bbefbb995">
-
+    
     <style>
       :root {
         --bs-body-bg: #fff7e6; /* Soft beige, inspired by food packaging */
         --bs-body-color: #4a3f35; /* Rich brown for text */
         --bs-primary: #ff6f00; /* Vibrant orange, inspired by spices */
         --bs-secondary: #795548; /* Deep brown */
-        --bs-success: #28a745;
-        --bs-info: #17a2b8;
-        --bs-warning: #ffc107;
-        --bs-danger: #dc3545;
-        --bs-light: #f8f9fa;
+        --bs-success: #28a745; /* Standard green for success messages */
+        --bs-info: #17a2b8; /* Standard blue for informational messages */
+        --bs-warning: #ffc107; /* Standard yellow for warnings */
+        --bs-danger: #dc3545; /* Standard red for errors */
+        --bs-light: #f8f9fa; /* Light grey for backgrounds */
         --bs-dark: #4a3f35; /* Matching text color */
       }
       body {
@@ -55,7 +54,10 @@
         border-color: #e65c00;
       }
       .carousel-control-next,
-      .carousel-control-prev, .carousel-indicators {
+      .carousel-control-prev {
+        filter: invert(100%);
+      }
+      .carousel-indicators {
         filter: invert(100%);
       }
     </style>
