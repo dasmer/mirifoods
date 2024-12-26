@@ -12,6 +12,48 @@
       rel="stylesheet"
     >
     <link rel="stylesheet" href="/assets/css/style.css?v=9c83edd45fffbb7a28cee26b9dde012bbefbb995">
+
+    <style>
+      :root {
+        --bs-body-bg: #fff7e6; /* Soft beige, inspired by food packaging */
+        --bs-body-color: #4a3f35; /* Rich brown for text */
+        --bs-primary: #ff6f00; /* Vibrant orange, inspired by spices */
+        --bs-secondary: #795548; /* Deep brown */
+        --bs-success: #28a745;
+        --bs-info: #17a2b8;
+        --bs-warning: #ffc107;
+        --bs-danger: #dc3545;
+        --bs-light: #f8f9fa;
+        --bs-dark: #4a3f35; /* Matching text color */
+      }
+      body {
+        background-color: var(--bs-body-bg);
+        color: var(--bs-body-color);
+      }
+      .container {
+        background: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        border-radius: 8px;
+      }
+      h1, h3 {
+        color: var(--bs-dark);
+      }
+      a {
+        color: var(--bs-primary);
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .btn-primary {
+        background-color: var(--bs-primary);
+        border-color: var(--bs-primary);
+      }
+      .btn-primary:hover {
+        background-color: #e65c00; /* Darker shade for hover effect */
+        border-color: #e65c00;
+      }
+    </style>
   </head>
   <body>
     <div class="container py-3">
