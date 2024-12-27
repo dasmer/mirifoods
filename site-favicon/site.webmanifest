@@ -1,6 +1,6 @@
 {
-  "name": "Miri Foods | Premium South Asian Ingredients",
-  "short_name": "Miri Foods",
+  "name": "Mahi Foods",
+  "short_name": "Mahi",
   "icons": [
     {
       "src": "/site-favicon/web-app-manifest-192x192.png",
@@ -15,7 +15,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#fff7e6",
+  "background_color": "#fff7e6",
   "display": "standalone"
 }
