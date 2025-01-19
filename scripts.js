@@ -34,17 +34,9 @@ document.getElementById('current-year').textContent = new Date().getFullYear();
   }
 })(document, window.mixpanel || []);
 
+var log_mixpanel = (window.location.protocol !== 'file:' && window.location.hostname !== 'localhost')
+
 // Track page view and link clicks
-if (window.location.protocol !== 'file:' && window.location.hostname !== 'localhost') {
+if (log_mixpanel) {
   mixpanel.init("14db4f18db54e5ccf3fb2a2336ab86ab");
-
-  mixpanel.track("Home – Page View");
-
-  document.addEventListener('DOMContentLoaded', function(){
-    document.querySelectorAll('a').forEach(function(link){
-      link.addEventListener('click', function(){
-        mixpanel.track("Home – Link Click", { href: link.href });
-      });
-    });
-  });
 }
