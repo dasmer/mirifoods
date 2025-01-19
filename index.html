@@ -39,68 +39,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/site-favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Miri Foods" />
     <link rel="manifest" href="/site-favicon/site.webmanifest" />
-    
-    <style>
-      :root {
-        --bs-body-bg: #fff7e6; /* Soft beige, inspired by food packaging */
-        --bs-body-color: #4a3f35; /* Rich brown for text */
-        --bs-primary: #ff6f00; /* Vibrant orange, inspired by spices */
-        --bs-secondary: #795548; /* Deep brown */
-        --bs-success: #28a745; /* Standard green for success messages */
-        --bs-info: #17a2b8; /* Standard blue for informational messages */
-        --bs-warning: #ffc107; /* Standard yellow for warnings */
-        --bs-danger: #dc3545; /* Standard red for errors */
-        --bs-light: #f8f9fa; /* Light grey for backgrounds */
-        --bs-dark: #4a3f35; /* Matching text color */
-      }
-      body {
-        background-color: var(--bs-body-bg);
-        color: var(--bs-body-color);
-      }
-      .container {
-        background: white;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 2rem;
-        border-radius: 8px;
-        max-width: 100%;
-      }
-      h1.display-2  {
-        color: var(--bs-dark);
-        font-family: 'Rubik', sans-serif;
-        font-weight: 900;
-        margin-bottom: 0; /* Remove bottom margin */
-        line-height: 1;
-      }
-      h6.subtitle {
-        color: var(--bs-dark);
-        font-family: 'Rubik', sans-serif;
-        font-weight: 500
-        margin-top: 0; /* Remove top margin */
-        line-height: 1;
-      }
-      h3 {
-        color: var(--bs-dark);
-      }
-      a {
-        color: var(--bs-primary);
-      }
-      .btn-primary {
-        background-color: var(--bs-primary);
-        border-color: var(--bs-primary);
-        font-weight: bold; /* Make the button text bold */
-      }
-      .btn-primary:hover {
-        background-color: #e65c00; /* Darker shade for hover effect */
-        border-color: #e65c00;
-      }
-      .carousel-control-next,
-      .carousel-control-prev {
-        filter: invert(100%);
-      }
-      .carousel-indicators {
-        filter: invert(100%);
-      }
-    </style>
+
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <div class="container-fluid py-3">
@@ -189,11 +130,11 @@
             <li>Authentic Spices</li>
             <li>Premium Rice</li>
             <li>Paper and Packaging Supplies</li>
-            </ul>
-            <p>
-              Download our comprehensive product list 
-              <a href="mirifoods-productlist.pdf" class="text-decoration-none">here</a>.
-            </p>
+          </ul>
+          <p>
+            Download our comprehensive product list
+            <a href="mirifoods-productlist.pdf" class="text-decoration-none">here</a>.
+          </p>
         </section>
 
         <section id="why-choose-miri-foods" class="mb-4">
@@ -226,45 +167,9 @@
       </div>
     </div>
 
+    <!-- Link to external JavaScript -->
+    <script src="scripts.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Mixpanel -->
-    <script type="text/javascript">
-      (function(f,b){
-      if(!b.__SV){var a,e,i,g;window.mixpanel=b;b._i=[];
-      b.init=function(a,e,d){function f(b,h){
-      var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);
-      b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;
-      "undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];
-      c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);
-      b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};
-      i="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
-      for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};
-      b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;
-      a.src="https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";
-      e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)
-      }})(document,window.mixpanel||[]);
-      
-      if (window.location.protocol !== 'file:' && window.location.hostname !== 'localhost') {
-      mixpanel.init("14db4f18db54e5ccf3fb2a2336ab86ab");
-
-      // Track page view
-      mixpanel.track("Home – Page View");
-
-      // Track link clicks
-      document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('a').forEach(function(link) {
-        link.addEventListener('click', function() {
-        mixpanel.track("Home – Link Click", {
-        href: link.href
-        });
-        });
-      });
-      });
-      }
-    </script>
-    <script>
-      document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
   </body>
 </html>

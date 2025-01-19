@@ -1,0 +1,69 @@
+:root {
+  --bs-body-bg: #fff7e6;
+  --bs-body-color: #4a3f35;
+  --bs-primary: #ff6f00;
+  --bs-secondary: #795548;
+  --bs-success: #28a745;
+  --bs-info: #17a2b8;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #4a3f35;
+}
+
+body {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+
+.container {
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 100%;
+}
+
+h1.display-2 {
+  color: var(--bs-dark);
+  font-family: 'Rubik', sans-serif;
+  font-weight: 900;
+  margin-bottom: 0;
+  line-height: 1;
+}
+
+h6.subtitle {
+  color: var(--bs-dark);
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  margin-top: 0;
+  line-height: 1;
+}
+
+h3 {
+  color: var(--bs-dark);
+}
+
+a {
+  color: var(--bs-primary);
+}
+
+.btn-primary {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: #e65c00;
+  border-color: #e65c00;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  filter: invert(100%);
+}
+
+.carousel-indicators {
+  filter: invert(100%);
+}
