@@ -72,20 +72,29 @@
       justify-content: space-around;
       align-items: center;
       margin-top: 10px;
+      position: fixed; /* from previous change */
+      bottom: 20px;    /* from previous change */
+      left: 50%;       /* from previous change */
+      transform: translateX(-50%); /* from previous change */
     }
 
     #controlButtons button {
       background-color: #444;
       color: #fff;
       border: none;
-      padding: 10px 20px;
-      font-size: 1.2rem;
+      padding: 20px 30px; /* from previous change */
+      font-size: 2rem;    /* from previous change */
       cursor: pointer;
       border-radius: 5px;
     }
 
     #controlButtons button:hover {
       background-color: #666;
+    }
+
+    /* === Added line below to create a gap between the two buttons === */
+    #controlButtons button + button {
+      margin-left: 40px;
     }
   </style>
 </head>
@@ -105,8 +114,8 @@
 
   <!-- Optional Up/Down Control Buttons for mobile and accessibility -->
   <div id="controlButtons">
-    <button id="moveUp">Up</button>
-    <button id="moveDown">Down</button>
+    <button id="moveUp">▲</button>
+    <button id="moveDown">▼</button>
   </div>
 </div>
 
