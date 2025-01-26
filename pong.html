@@ -315,10 +315,19 @@
     const text = "MIRI";
     ctx.fillText(text, ballX + ballWidth / 2, ballY + ballHeight / 2);
 
-    // Display scores (top center)
+    // Display scores with labels
     ctx.fillStyle = "white";
     ctx.font = "16px sans-serif";
-    ctx.fillText(`${playerScore} : ${computerScore}`, GAME_WIDTH / 2 - 15, 20);
+
+    // User's Score - Left Side
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText(`You: ${playerScore}`, 20, 20);
+
+    // Computer's Score - Right Side
+    ctx.textAlign = "right";
+    ctx.textBaseline = "top";
+    ctx.fillText(`Computer: ${computerScore}`, GAME_WIDTH - 20, 20);
 
     // Optionally display "PAUSED" if paused
     if (paused && !gameOver) {
@@ -326,7 +335,9 @@
       ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
       ctx.fillStyle = "white";
       ctx.font = "24px sans-serif";
-      ctx.fillText("PAUSED", GAME_WIDTH / 2 - 50, GAME_HEIGHT / 2);
+      ctx.textAlign = "center"; // Ensure center alignment
+      ctx.textBaseline = "middle"; // Ensure middle alignment
+      ctx.fillText("PAUSED", GAME_WIDTH / 2, GAME_HEIGHT / 2);
     }
   }
 
@@ -354,7 +365,7 @@
   function endGame() {
     gameOver = true;
     paused = true;
-    finalScoreEl.innerText = `Final Score: ${playerScore} - ${computerScore}`;
+    finalScoreEl.innerText = `Final Score: You ${playerScore} - Computer ${computerScore}`;
     overlay.style.display = "flex";
   }
 
