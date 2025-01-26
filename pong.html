@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Updated Title and Meta Description for Miri Pong -->
+    <title>Miri Pong | Single-Player Pong with Paneer Ball</title>
+    <meta name="description" content="Play Miri Pong, a single-player Pong game featuring a special 'paneer' ball labeled 'MIRI.' Enjoy fun gameplay against an AI paddle, with easy controls on any device." />
+
+    <!-- Open Graph meta tags for Miri Pong -->
+    <meta property="og:title" content="Miri Pong | Single-Player Pong with Paneer Ball">
+    <meta property="og:description" content="Challenge an AI paddle in Miri Pong, featuring a 'paneer' ball labeled 'MIRI.' Tap, click, or use keyboard controls to bounce the ball and score points!">
+    <meta property="og:image" content="/images/sach.webp">
+    <meta property="og:url" content="https://www.mirifoods.com/miri_pong.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Miri Foods">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Miri Pong | Single-Player Pong with Paneer Ball">
+    <meta name="twitter:description" content="Play Miri Pong and battle an AI paddle with a 'paneer' ball labeled 'MIRI.' Perfect for quick, fun gaming on any device!">
+    <meta name="twitter:image" content="/images/sach.webp">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/site-favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/site-favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/site-favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/site-favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Miri Foods" />
+    <link rel="manifest" href="/site-favicon/site.webmanifest" />
+
+    <!-- External CSS (optional) -->
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="container-fluid py-3">
+      <div class="container">
+        <header class="text-center mb-4">
+          <h1 class="display-2">MIRI PONG</h1>
+          <a href="index.html" class="btn btn-primary mt-3">
+            <i class="bi bi-house-door"></i> Go Home
+          </a>
+        </header>
+
+        <!-- BEGIN: PONG GAME -->
+        <style>
+          /* Embedded Pong styles */
+          #gameArea {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            background-color: #222;
+            overflow: hidden;
+            border: 2px solid #ccc;
+            margin: 0 auto; /* Center horizontally */
+            cursor: pointer; /* Show clickable for pause/unpause */
+          }
+
+          .paddle {
+            position: absolute;
+            width: 15px;
+            height: 80px;
+            background-color: #fff;
+          }
+
+          #paddleLeft {
+            left: 20px;
+            top: 210px;
+          }
+
+          #paddleRight {
+            right: 20px;
+            top: 210px;
+          }
+
+          #ball {
+            position: absolute;
+            width: 50px;
+            height: 30px;
+            background-color: #f5deb3; /* "Paneer" color */
+            color: #000;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            border: 2px solid #999;
+            left: 375px;
+            top: 235px; /* roughly centered */
+          }
+
+          #score {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 24px;
+          }
+
+          /* "PAUSED" overlay */
+          #pausedOverlay {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 48px;
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+          }
+
+          /* Container for Up/Down buttons below the game area */
+          #controlsBelow {
+            display: flex;
+            flex-direction: column;  /* stack Up on top of Down */
+            align-items: center;
+            gap: 10px;               /* small gap between buttons */
+            margin-top: 20px;
+          }
+
+          .controlButton {
+            width: 80px;
+            height: 50px;
+            background: #666;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            touch-action: none; /* so touches are captured, not scrolled */
+          }
+          .controlButton:active {
+            background: #888;
+          }
+        </style>
+
+        <!-- Game Area -->
+        <div id="gameArea" class="mb-3">
+          <div id="pausedOverlay">PAUSED</div>
+          <div id="ball">MIRI</div>
+          <div id="paddleLeft" class="paddle"></div>
+          <div id="paddleRight" class="paddle"></div>
+          <div id="score">0 : 0</div>
+        </div>
+
+        <!-- Up/Down Buttons below the game area -->
+        <div id="controlsBelow">
+          <button id="btnUp" class="controlButton">Up</button>
+          <button id="btnDown" class="controlButton">Down</button>
+        </div>
+
+        <!-- Pong Game Script -->
+        <script>
+          const gameWidth = 800;
+          const gameHeight = 500;
+
+          // Paddle dimensions
+          const paddleWidth = 15;
+          const paddleHeight = 80;
+
+          // Ball dimensions
+          const ballWidth = 50;
+          const ballHeight = 30;
+
+          // DOM references
+          const gameArea = document.getElementById('gameArea');
+          const ball = document.getElementById('ball');
+          const paddleLeft = document.getElementById('paddleLeft');
+          const paddleRight = document.getElementById('paddleRight');
+          const scoreDisplay = document.getElementById('score');
+          const pausedOverlay = document.getElementById('pausedOverlay');
+          const btnUp = document.getElementById('btnUp');
+          const btnDown = document.getElementById('btnDown');
+
+          // Initial positions
+          let ballX = (gameWidth - ballWidth) / 2;
+          let ballY = (gameHeight - ballHeight) / 2;
+          let paddleLeftY = (gameHeight - paddleHeight) / 2;
+          let paddleRightY = (gameHeight - paddleHeight) / 2;
+
+          // Ball speeds
+          let ballSpeedX = 5;
+          let ballSpeedY = 5;
+
+          // Paddle movement flags
+          let moveUp = false;
+          let moveDown = false;
+
+          // Player paddle speed
+          const paddleSpeed = 6;
+
+          // AI paddle speed (easier AI)
+          const aiSpeed = 2;
+
+          // Scores
+          let leftScore = 0;
+          let rightScore = 0;
+
+          // Paused state
+          let paused = false;
+
+          //-----------------------
+          //   EVENT LISTENERS
+          //-----------------------
+          // Keyboard
+          window.addEventListener('keydown', (e) => {
+            switch (e.key) {
+              case 'ArrowUp':
+              case 'w':
+              case 'W':
+                moveUp = true;
+                break;
+              case 'ArrowDown':
+              case 's':
+              case 'S':
+                moveDown = true;
+                break;
+              case ' ':
+              case 'Spacebar':
+                togglePause();
+                break;
+            }
+          });
+          window.addEventListener('keyup', (e) => {
+            switch (e.key) {
+              case 'ArrowUp':
+              case 'w':
+              case 'W':
+                moveUp = false;
+                break;
+              case 'ArrowDown':
+              case 's':
+              case 'S':
+                moveDown = false;
+                break;
+            }
+          });
+
+          // Touch/Mouse buttons below
+          function startMoveUp() { moveUp = true; }
+          function endMoveUp() { moveUp = false; }
+          function startMoveDown() { moveDown = true; }
+          function endMoveDown() { moveDown = false; }
+
+          btnUp.addEventListener('mousedown', startMoveUp);
+          btnUp.addEventListener('mouseup', endMoveUp);
+          btnUp.addEventListener('mouseout', endMoveUp);
+          btnUp.addEventListener('touchstart', (e) => { e.preventDefault(); startMoveUp(); });
+          btnUp.addEventListener('touchend', (e) => { e.preventDefault(); endMoveUp(); });
+          btnUp.addEventListener('touchcancel', (e) => { e.preventDefault(); endMoveUp(); });
+
+          btnDown.addEventListener('mousedown', startMoveDown);
+          btnDown.addEventListener('mouseup', endMoveDown);
+          btnDown.addEventListener('mouseout', endMoveDown);
+          btnDown.addEventListener('touchstart', (e) => { e.preventDefault(); startMoveDown(); });
+          btnDown.addEventListener('touchend', (e) => { e.preventDefault(); endMoveDown(); });
+          btnDown.addEventListener('touchcancel', (e) => { e.preventDefault(); endMoveDown(); });
+
+          // Click/tap inside the game area => pause/unpause
+          gameArea.addEventListener('click', togglePause);
+          gameArea.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+              togglePause();
+            }
+          });
+
+          //-----------------------
+          //  PAUSE / UNPAUSE
+          //-----------------------
+          function togglePause() {
+            paused = !paused;
+            pausedOverlay.style.display = paused ? 'block' : 'none';
+          }
+
+          //-----------------------
+          //   GAME LOOP
+          //-----------------------
+          function update() {
+            if (!paused) {
+              // Move left paddle
+              if (moveUp) {
+                paddleLeftY = Math.max(0, paddleLeftY - paddleSpeed);
+              }
+              if (moveDown) {
+                paddleLeftY = Math.min(gameHeight - paddleHeight, paddleLeftY + paddleSpeed);
+              }
+
+              // Move right paddle (AI)
+              const paddleRightCenter = paddleRightY + (paddleHeight / 2);
+              const ballCenter = ballY + (ballHeight / 2);
+
+              if (paddleRightCenter < ballCenter) {
+                paddleRightY = Math.min(gameHeight - paddleHeight, paddleRightY + aiSpeed);
+              } else if (paddleRightCenter > ballCenter) {
+                paddleRightY = Math.max(0, paddleRightY - aiSpeed);
+              }
+
+              // Move ball
+              ballX += ballSpeedX;
+              ballY += ballSpeedY;
+
+              // Top/bottom collision
+              if (ballY <= 0 || (ballY + ballHeight) >= gameHeight) {
+                ballSpeedY = -ballSpeedY;
+              }
+
+              // Left paddle collision
+              if (
+                ballX <= (20 + paddleWidth) &&
+                (ballY + ballHeight) >= paddleLeftY &&
+                (ballY) <= (paddleLeftY + paddleHeight)
+              ) {
+                ballSpeedX = -ballSpeedX;
+                ballX = 20 + paddleWidth; // shift out
+              }
+
+              // Right paddle collision
+              if (
+                (ballX + ballWidth) >= (gameWidth - 20 - paddleWidth) &&
+                (ballY + ballHeight) >= paddleRightY &&
+                (ballY) <= (paddleRightY + paddleHeight)
+              ) {
+                ballSpeedX = -ballSpeedX;
+                ballX = (gameWidth - 20 - paddleWidth - ballWidth); // shift out
+              }
+
+              // Scoring checks:
+              // If ball crosses the left boundary (x < 0), AI scores
+              if (ballX < 0) {
+                rightScore++;
+                resetBall();
+              }
+              // If ball crosses the right boundary (x+ballWidth > gameWidth), player scores
+              else if ((ballX + ballWidth) > gameWidth) {
+                leftScore++;
+                resetBall();
+              }
+
+              // Update DOM
+              paddleLeft.style.top = paddleLeftY + 'px';
+              paddleRight.style.top = paddleRightY + 'px';
+              ball.style.left = ballX + 'px';
+              ball.style.top = ballY + 'px';
+
+              // Update score
+              scoreDisplay.textContent = `${leftScore} : ${rightScore}`;
+            }
+            requestAnimationFrame(update);
+          }
+
+          //-----------------------
+          //  RESET BALL
+          //-----------------------
+          function resetBall() {
+            ballX = (gameWidth - ballWidth) / 2;
+            ballY = (gameHeight - ballHeight) / 2;
+            // Reverse horizontal direction
+            ballSpeedX = -ballSpeedX;
+            // Randomly flip vertical
+            ballSpeedY = 5 * (Math.random() < 0.5 ? 1 : -1);
+          }
+
+          // Start game loop
+          requestAnimationFrame(update);
+        </script>
+        <!-- END: PONG GAME -->
+
+        <footer class="text-center text-muted mt-5">
+          <div>
+            <img src="images/logo.webp"
+                 alt="Miri Foods Logo"
+                 class="img-fluid"
+                 style="max-width: 150px;"
+                 loading="lazy">
+          </div>
+          Mahi Foods LLC DBA Miri Foods © <span id="current-year"></span>
+        </footer>
+      </div>
+    </div>
+
+    <!-- scripts.js (optional external JS) -->
+    <script src="scripts.js"></script>
+
+    <!-- Mixpanel tracking script -->
+    <script>
+      // Example of logging page views if 'log_mixpanel' is set somewhere else
+      if (typeof log_mixpanel !== 'undefined' && log_mixpanel) {
+        mixpanel.track("Pong – Page View");
+
+        document.addEventListener('DOMContentLoaded', function() {
+          document.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+              mixpanel.track("Pong – Link Click", { href: link.href });
+            });
+          });
+        });
+      }
+      // Update year in footer automatically
+      document.addEventListener('DOMContentLoaded', function() {
+        const yearSpan = document.getElementById("current-year");
+        if(yearSpan) {
+          yearSpan.textContent = new Date().getFullYear();
+        }
+      });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
