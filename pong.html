@@ -432,12 +432,22 @@
      * HELPER FUNCTIONS
      *************************************************************/
     function resetBall() {
-      // Reset paneer block position in the center
-      ballX = GAME_WIDTH / 2 - ballWidth / 2;
-      ballY = GAME_HEIGHT / 2 - ballHeight / 2;
-      // Reverse direction to the opposite side
+      // Reverse the horizontal direction
       ballSpeedX = -ballSpeedX;
+      // Randomize the vertical speed direction
       ballSpeedY = (Math.random() > 0.5 ? 1 : -1) * 3;
+
+      // Set the ball's starting X position based on its direction
+      if (ballSpeedX > 0) {
+        // If moving right, start from the left side
+        ballX = leftPaddleX + paddleWidth;
+      } else {
+        // If moving left, start from the right side
+        ballX = rightPaddleX - ballWidth;
+      }
+
+      // Center the ball vertically
+      ballY = GAME_HEIGHT / 2 - ballHeight / 2;
     }
 
     function resetPaddlesAndScore() {
