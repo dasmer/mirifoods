@@ -306,15 +306,14 @@
     // Draw the "paneer block" labeled "MIRI"
     ctx.fillStyle = "white";
     ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
+
     // Draw text "MIRI" on the rectangle
     ctx.fillStyle = "black"; // text color
-    ctx.font = "bold 14px sans-serif";
-    // Center the text inside the block
+    ctx.font = "bold 12px sans-serif"; // Adjusted font size for better fit
+    ctx.textAlign = "center"; // Center horizontally
+    ctx.textBaseline = "middle"; // Center vertically
     const text = "MIRI";
-    let textMetrics = ctx.measureText(text);
-    let textX = ballX + (ballWidth - textMetrics.width) / 2;
-    let textY = ballY + (ballHeight / 2) + 5; // +5 to center vertically
-    ctx.fillText(text, textX, textY);
+    ctx.fillText(text, ballX + ballWidth / 2, ballY + ballHeight / 2);
 
     // Display scores (top center)
     ctx.fillStyle = "white";
