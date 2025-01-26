@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MIRI PONG</title>
+  <title>MIRI PONG - Classic Pong Game Reimagined</title>
+  <meta name="description" content="Play MIRI PONG, a modern take on the classic Pong game. Enjoy responsive gameplay, intuitive controls, and a captivating logo.">
+  <meta name="keywords" content="MIRI PONG, Pong Game, Single Player Game, JavaScript Game, HTML5 Game">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;900&display=swap" rel="stylesheet">
   <style>
     /* ========== BASIC PAGE & RESPONSIVE STYLES ========== */
     body {
       margin: 0;
       padding: 0;
-      background: #222;
-      color: #fff;
+      background: #fff7e6; /* Changed from #222 to #fff7e6 */
+      color: #4a3f35; /* Updated text color for better contrast */
       font-family: sans-serif;
       display: flex;
       flex-direction: column;
@@ -30,7 +34,7 @@
     #gameCanvas {
       width: 100%;
       height: auto;
-      background: #000;
+      background: #4a3f35; /* Changed from #000 to #4a3f35 */
       display: block;
       border: 2px solid #fff;
       touch-action: none; /* Prevent scrolling on mobile while swiping on canvas */
@@ -79,7 +83,7 @@
     }
 
     #controlButtons button {
-      background-color: #444;
+      background-color: #ff6f00; /* Changed from #444 to #ff6f00 */
       color: #fff;
       border: none;
       padding: 20px 30px; /* from previous change */
@@ -89,7 +93,7 @@
     }
 
     #controlButtons button:hover {
-      background-color: #666;
+      background-color: #666; /* Optional: You can adjust hover color if desired */
     }
 
     /* === Added line below to create a gap between the two buttons === */
@@ -307,18 +311,18 @@
     // ...
 
     // Draw left paddle
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "#ff6f00"; // Changed from "white" to "#ff6f00"
     ctx.fillRect(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
 
     // Draw right paddle
     ctx.fillRect(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
 
     // Draw the "paneer block" labeled "MIRI"
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "#ff6f00"; // Changed from "white" to "#ff6f00"
     ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
 
     // Draw text "MIRI" on the rectangle
-    ctx.fillStyle = "black"; // text color
+    ctx.fillStyle = "black"; // text color remains for contrast
     ctx.font = "bold 12px sans-serif"; // Adjusted font size for better fit
     ctx.textAlign = "center"; // Center horizontally
     ctx.textBaseline = "middle"; // Center vertically
@@ -326,7 +330,7 @@
     ctx.fillText(text, ballX + ballWidth / 2, ballY + ballHeight / 2);
 
     // Display scores with labels
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "#ff6f00"; // Changed score text color to match paddles and ball
     ctx.font = "16px sans-serif";
 
     // User's Score - Left Side
@@ -350,7 +354,7 @@
     if (paused && !gameOver) {
       ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
       ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-      ctx.fillStyle = "white";
+      ctx.fillStyle = "#ff6f00"; // Changed paused text color to match theme
       ctx.font = "24px sans-serif";
       ctx.textAlign = "center"; // Ensure center alignment
       ctx.textBaseline = "middle"; // Ensure middle alignment
@@ -478,7 +482,6 @@
 
   // Start the rendering loop
   requestAnimationFrame(gameLoop);
-
 </script>
 </body>
 </html>
