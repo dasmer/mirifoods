@@ -216,7 +216,7 @@
     // Positions and velocity
     let ballX = GAME_WIDTH / 2 - ballWidth / 2;
     let ballY = GAME_HEIGHT / 2 - ballHeight / 2;
-    let ballSpeedX = 5;
+    let ballSpeedX = 7;
     let ballSpeedY = 3;
 
     // Scores
@@ -351,9 +351,6 @@
     function drawEverything() {
       // Clear screen
       ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-
-      // Draw net or center line if desired (optional)
-      // ...
 
       // Draw Logo in the center if loaded (behind paneer)
       if (logoLoaded) {
