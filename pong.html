@@ -113,7 +113,7 @@
       background-color: #ff6f00; /* Changed from #444 to #ff6f00 */
       color: #fff;
       border: none;
-      padding: 20px 30px; /* from previous change */
+      padding: 20px 40px; /* Increased horizontal padding for width 2x height */
       font-size: 2rem;    /* from previous change */
       cursor: pointer;
       border-radius: 5px;
@@ -132,7 +132,7 @@
     /* Optional: Responsive Adjustments */
     @media (max-width: 600px) {
       #controlButtons button {
-        padding: 15px 25px;
+        padding: 15px 30px; /* Adjusted for smaller screens */
         font-size: 1.5rem;
       }
 
@@ -281,12 +281,12 @@
       ballY += ballSpeedY;
 
       // Simple AI for right paddle (computer)
-      // Moves paddle's center toward the ball's center
+      // Reduced speed for easier gameplay
       let paddleCenter = rightPaddleY + paddleHeight / 2;
       if (paddleCenter < ballY) {
-        rightPaddleY += 3.5;
+        rightPaddleY += 2.0; // Reduced from 3.5 to 2.0
       } else if (paddleCenter > ballY) {
-        rightPaddleY -= 3.5;
+        rightPaddleY -= 2.0; // Reduced from 3.5 to 2.0
       }
       // Clamp the computer's paddle
       if (rightPaddleY < 0) rightPaddleY = 0;
@@ -355,6 +355,22 @@
       // Draw net or center line if desired (optional)
       // ...
 
+      // Draw Logo in the center if loaded (behind paneer)
+      if (logoLoaded) {
+        const logoWidth = 100; // Adjust the width as needed
+        const logoHeight = 100; // Adjust the height as needed
+        const logoX = (GAME_WIDTH - logoWidth) / 2;
+        const logoY = (GAME_HEIGHT - logoHeight) / 2;
+        ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+
+        // Draw "MIRI PONG" below the logo
+        ctx.font = "900 24px 'Rubik', sans-serif"; // Use Rubik font with weight 900
+        ctx.fillStyle = "#ff6f00"; // Match the theme color
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillText("MIRI PONG", GAME_WIDTH / 2, logoY + logoHeight + 10); // Position below the logo
+      }
+
       // Draw left paddle
       ctx.fillStyle = "#ff6f00"; // Changed from "white" to "#ff6f00"
       ctx.fillRect(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
@@ -367,8 +383,8 @@
       ctx.fillStyle = "#ff6f00"; // Changed from "white" to "#ff6f00"
       ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
 
-      // Draw text "MIRI" on the rectangle
-      ctx.fillStyle = "black"; // text color remains for contrast
+      // Draw text "MIRI" on the rectangle with updated color
+      ctx.fillStyle = "#4a3f35"; // Updated text color to #4a3f35
       ctx.font = "bold 12px sans-serif"; // Adjusted font size for better fit
       ctx.textAlign = "center"; // Center horizontally
       ctx.textBaseline = "middle"; // Center vertically
@@ -384,22 +400,6 @@
 
       ctx.textAlign = "right";
       ctx.fillText(`Computer: ${computerScore}`, GAME_WIDTH - 20, 20);
-
-      // Draw Logo in the center if loaded
-      if (logoLoaded) {
-        const logoWidth = 100; // Adjust the width as needed
-        const logoHeight = 100; // Adjust the height as needed
-        const logoX = (GAME_WIDTH - logoWidth) / 2;
-        const logoY = (GAME_HEIGHT - logoHeight) / 2;
-        ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
-
-        // Draw "MIRI PONG" below the logo
-        ctx.font = "900 24px 'Rubik', sans-serif"; // Use Rubik font with weight 900
-        ctx.fillStyle = "#ff6f00"; // Match the theme color
-        ctx.textAlign = "center";
-        ctx.textBaseline = "top";
-        ctx.fillText("MIRI PONG", GAME_WIDTH / 2, logoY + logoHeight + 10); // Position below the logo
-      }
 
       // Optionally display "PAUSED" if paused
       if (paused && !gameOver) {
@@ -536,7 +536,7 @@
 
   </script>
 
-  <!-- Link to external JavaScript -->
+ <!-- Link to external JavaScript -->
   <script src="scripts.js"></script>
   <!-- Mixpanel tracking script -->
   <script>
