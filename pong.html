@@ -97,6 +97,16 @@
       background-color: #e65c00; /* Slightly darker on hover */
     }
 
+    /* ========== COPYRIGHT CONTAINER ========== */
+    #copyrightContainer {
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+    }
+    a {
+        color: #4a3f35;
+    }
+
     /* ========== MOBILE/DESKTOP CONTROL BUTTONS ========== */
     #controlButtons {
       display: flex;
@@ -161,11 +171,16 @@
       </div>
     </div>
 
+
     <!-- Optional Up/Down Control Buttons for mobile and accessibility -->
     <div id="controlButtons">
       <button id="moveUp">▲</button>
       <button id="moveDown">▼</button>
     </div>
+  </div>
+
+  <div id="copyrightContainer">
+    <a href= 'index.html'>Mahi Foods LLC DBA Miri Foods © <span id="current-year"></span></a>
   </div>
 
   <script>
