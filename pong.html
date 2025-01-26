@@ -134,23 +134,39 @@
   let GAME_WIDTH = 600;   // Internal logic width
   let GAME_HEIGHT = 400;  // Internal logic height
 
+  /*************************************************************
+   * RESPONSIVE RESIZING
+   * We'll maintain an internal game logic size (GAME_WIDTH x GAME_HEIGHT)
+   * and scale it to the canvas actual size for rendering.
+   *************************************************************/
+  function resizeGame() {
+    // Maintain aspect ratio
+    // This sets the canvas's actual pixels
+    // while we keep an internal coordinate system
+    canvas.width = GAME_WIDTH;
+    canvas.height = GAME_HEIGHT;
+  }
+
+  // Call resize on load
+  resizeGame();
+
   // ======== GAME STATE VARIABLES ========
   let paddleWidth = 10;
   let paddleHeight = 70;
 
   let leftPaddleX = 10;
-  let leftPaddleY = 0;
+  let leftPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
 
-  let rightPaddleX = 0; // will be set relative to GAME_WIDTH
-  let rightPaddleY = 0;
+  let rightPaddleX = GAME_WIDTH - paddleWidth - 10;
+  let rightPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
 
   // "Paneer block" (the ball) dimensions
   let ballWidth = 30;
   let ballHeight = 20;
 
   // Positions and velocity
-  let ballX = 0;
-  let ballY = 0;
+  let ballX = GAME_WIDTH / 2 - ballWidth / 2;
+  let ballY = GAME_HEIGHT / 2 - ballHeight / 2;
   let ballSpeedX = 5;
   let ballSpeedY = 3;
 
@@ -174,21 +190,14 @@
   const moveUpBtn = document.getElementById("moveUp");
   const moveDownBtn = document.getElementById("moveDown");
 
-  /*************************************************************
-   * RESPONSIVE RESIZING
-   * We'll maintain an internal game logic size (GAME_WIDTH x GAME_HEIGHT)
-   * and scale it to the canvas actual size for rendering.
-   *************************************************************/
-  function resizeGame() {
-    // Maintain aspect ratio
-    // This sets the canvas's actual pixels
-    // while we keep an internal coordinate system
-    canvas.width = GAME_WIDTH;
-    canvas.height = GAME_HEIGHT;
-  }
+  // ======== LOGO IMAGE =========
+  const logo = new Image();
+  logo.src = 'pong-assets/logo.webp';
+  let logoLoaded = false;
 
-  // Call resize on load
-  resizeGame();
+  logo.onload = () => {
+    logoLoaded = true;
+  };
 
   /*************************************************************
    * MAIN GAME LOOP
@@ -207,7 +216,8 @@
     const paddleSpeed = 6;
     if (moveUpActive) {
       leftPaddleY -= paddleSpeed;
-    } else if (moveDownActive) {
+    } 
+    if (moveDownActive) {
       leftPaddleY += paddleSpeed;
     }
 
@@ -329,6 +339,13 @@
     ctx.textBaseline = "top";
     ctx.fillText(`Computer: ${computerScore}`, GAME_WIDTH - 20, 20);
 
+    // Draw Logo in the center if loaded
+    if (logoLoaded) {
+      const logoWidth = 100; // Adjust the width as needed
+      const logoHeight = 100; // Adjust the height as needed
+      ctx.drawImage(logo, (GAME_WIDTH - logoWidth) / 2, (GAME_HEIGHT - logoHeight) / 2, logoWidth, logoHeight);
+    }
+
     // Optionally display "PAUSED" if paused
     if (paused && !gameOver) {
       ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
@@ -355,7 +372,6 @@
 
   function resetPaddlesAndScore() {
     leftPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
-    rightPaddleX = GAME_WIDTH - paddleWidth - 10;
     rightPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
     playerScore = 0;
     computerScore = 0;
