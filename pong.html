@@ -6,8 +6,24 @@
   <title>MIRI PONG - Classic Pong Game Reimagined</title>
   <meta name="description" content="Play MIRI PONG, a modern take on the classic Pong game. Enjoy responsive gameplay, intuitive controls, and a captivating logo.">
   <meta name="keywords" content="MIRI PONG, Pong Game, Single Player Game, JavaScript Game, HTML5 Game">
+  
+  <!-- Open Graph meta tags -->
+  <meta property="og:title" content="MIRI PONG - Classic Pong Game Reimagined">
+  <meta property="og:description" content="Play MIRI PONG, a modern take on the classic Pong game. Enjoy responsive gameplay, intuitive controls, and a captivating logo.">
+  <meta property="og:image" content="/images/sach.webp"> <!-- Same image as before -->
+  <meta property="og:url" content="https://www.miripong.com/pong.html"> <!-- Replace with your actual game URL -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MIRI PONG">
+  
+  <!-- Twitter Card meta tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MIRI PONG - Classic Pong Game Reimagined">
+  <meta name="twitter:description" content="Play MIRI PONG, a modern take on the classic Pong game. Enjoy responsive gameplay, intuitive controls, and a captivating logo.">
+  <meta name="twitter:image" content="/images/sach.webp"> <!-- Same image as before -->
+  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;900&display=swap" rel="stylesheet">
+  
   <style>
     /* ========== BASIC PAGE & RESPONSIVE STYLES ========== */
     body {
@@ -133,391 +149,408 @@
 </head>
 <body>
 
-<div id="gameContainer">
-  <!-- The Canvas where the Pong game is rendered -->
-  <canvas id="gameCanvas"></canvas>
+  <div id="gameContainer">
+    <!-- The Canvas where the Pong game is rendered -->
+    <canvas id="gameCanvas"></canvas>
 
-  <!-- Overlay for Start/New Game and showing final score -->
-  <div id="overlay">
-    <div id="overlayContent">
-      <div id="finalScore"></div>
-      <button id="startButton">Start New Game</button>
+    <!-- Overlay for Start/New Game and showing final score -->
+    <div id="overlay">
+      <div id="overlayContent">
+        <div id="finalScore"></div>
+        <button id="startButton">Start New Game</button>
+      </div>
+    </div>
+
+    <!-- Optional Up/Down Control Buttons for mobile and accessibility -->
+    <div id="controlButtons">
+      <button id="moveUp">▲</button>
+      <button id="moveDown">▼</button>
     </div>
   </div>
 
-  <!-- Optional Up/Down Control Buttons for mobile and accessibility -->
-  <div id="controlButtons">
-    <button id="moveUp">▲</button>
-    <button id="moveDown">▼</button>
-  </div>
-</div>
+  <script>
+    /*************************************************************
+     * MIRI PONG - SINGLE PLAYER PONG GAME
+     * Author: OpenAI (ChatGPT)
+     * All in one file (HTML, CSS, JS)
+     *************************************************************/
+    
+    // ========= CANVAS & CONTEXT =========
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
 
-<script>
-  /*************************************************************
-   * MIRI PONG - SINGLE PLAYER PONG GAME
-   * Author: OpenAI (ChatGPT)
-   * All in one file (HTML, CSS, JS)
-   *************************************************************/
-  
-  // ========= CANVAS & CONTEXT =========
-  const canvas = document.getElementById("gameCanvas");
-  const ctx = canvas.getContext("2d");
+    // We'll dynamically set the canvas dimensions in code for responsive scaling
+    let GAME_WIDTH = 600;   // Internal logic width
+    let GAME_HEIGHT = 400;  // Internal logic height
 
-  // We'll dynamically set the canvas dimensions in code for responsive scaling
-  let GAME_WIDTH = 600;   // Internal logic width
-  let GAME_HEIGHT = 400;  // Internal logic height
-
-  /*************************************************************
-   * RESPONSIVE RESIZING
-   * We'll maintain an internal game logic size (GAME_WIDTH x GAME_HEIGHT)
-   * and scale it to the canvas actual size for rendering.
-   *************************************************************/
-  function resizeGame() {
-    // Maintain aspect ratio
-    // This sets the canvas's actual pixels
-    // while we keep an internal coordinate system
-    canvas.width = GAME_WIDTH;
-    canvas.height = GAME_HEIGHT;
-  }
-
-  // Call resize on load
-  resizeGame();
-
-  // ======== GAME STATE VARIABLES ========
-  let paddleWidth = 10;
-  let paddleHeight = 70;
-
-  let leftPaddleX = 10;
-  let leftPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
-
-  let rightPaddleX = GAME_WIDTH - paddleWidth - 10;
-  let rightPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
-
-  // "Paneer block" (the ball) dimensions
-  let ballWidth = 30;
-  let ballHeight = 20;
-
-  // Positions and velocity
-  let ballX = GAME_WIDTH / 2 - ballWidth / 2;
-  let ballY = GAME_HEIGHT / 2 - ballHeight / 2;
-  let ballSpeedX = 5;
-  let ballSpeedY = 3;
-
-  // Scores
-  let playerScore = 0;
-  let computerScore = 0;
-  const winningScore = 5;
-  let gameOver = false;
-
-  // Pause control
-  let paused = true; // Start in paused state until "Start New Game" is clicked
-
-  // Track user input
-  let moveUpActive = false;
-  let moveDownActive = false;
-
-  // DOM Elements
-  const overlay = document.getElementById("overlay");
-  const finalScoreEl = document.getElementById("finalScore");
-  const startButton = document.getElementById("startButton");
-  const moveUpBtn = document.getElementById("moveUp");
-  const moveDownBtn = document.getElementById("moveDown");
-
-  // ======== LOGO IMAGE =========
-  const logo = new Image();
-  logo.src = 'pong-assets/logo.webp';
-  let logoLoaded = false;
-
-  logo.onload = () => {
-    logoLoaded = true;
-  };
-
-  /*************************************************************
-   * MAIN GAME LOOP
-   *************************************************************/
-  function gameLoop() {
-    if (!paused && !gameOver) {
-      updatePositions();
-      checkCollisions();
-    }
-    drawEverything();
-    requestAnimationFrame(gameLoop);
-  }
-
-  function updatePositions() {
-    // Move player paddle
-    const paddleSpeed = 6;
-    if (moveUpActive) {
-      leftPaddleY -= paddleSpeed;
-    } 
-    if (moveDownActive) {
-      leftPaddleY += paddleSpeed;
+    /*************************************************************
+     * RESPONSIVE RESIZING
+     * We'll maintain an internal game logic size (GAME_WIDTH x GAME_HEIGHT)
+     * and scale it to the canvas actual size for rendering.
+     *************************************************************/
+    function resizeGame() {
+      // Maintain aspect ratio
+      // This sets the canvas's actual pixels
+      // while we keep an internal coordinate system
+      canvas.width = GAME_WIDTH;
+      canvas.height = GAME_HEIGHT;
     }
 
-    // Clamp paddle
-    if (leftPaddleY < 0) leftPaddleY = 0;
-    if (leftPaddleY + paddleHeight > GAME_HEIGHT) {
-      leftPaddleY = GAME_HEIGHT - paddleHeight;
+    // Call resize on load
+    resizeGame();
+
+    // ======== GAME STATE VARIABLES ========
+    let paddleWidth = 10;
+    let paddleHeight = 70;
+
+    let leftPaddleX = 10;
+    let leftPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
+
+    let rightPaddleX = GAME_WIDTH - paddleWidth - 10;
+    let rightPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
+
+    // "Paneer block" (the ball) dimensions
+    let ballWidth = 30;
+    let ballHeight = 20;
+
+    // Positions and velocity
+    let ballX = GAME_WIDTH / 2 - ballWidth / 2;
+    let ballY = GAME_HEIGHT / 2 - ballHeight / 2;
+    let ballSpeedX = 5;
+    let ballSpeedY = 3;
+
+    // Scores
+    let playerScore = 0;
+    let computerScore = 0;
+    const winningScore = 5;
+    let gameOver = false;
+
+    // Pause control
+    let paused = true; // Start in paused state until "Start New Game" is clicked
+
+    // Track user input
+    let moveUpActive = false;
+    let moveDownActive = false;
+
+    // DOM Elements
+    const overlay = document.getElementById("overlay");
+    const finalScoreEl = document.getElementById("finalScore");
+    const startButton = document.getElementById("startButton");
+    const moveUpBtn = document.getElementById("moveUp");
+    const moveDownBtn = document.getElementById("moveDown");
+
+    // ======== LOGO IMAGE =========
+    const logo = new Image();
+    logo.src = 'pong-assets/logo.webp';
+    let logoLoaded = false;
+
+    logo.onload = () => {
+      logoLoaded = true;
+    };
+
+    /*************************************************************
+     * MAIN GAME LOOP
+     *************************************************************/
+    function gameLoop() {
+      if (!paused && !gameOver) {
+        updatePositions();
+        checkCollisions();
+      }
+      drawEverything();
+      requestAnimationFrame(gameLoop);
     }
 
-    // Move the "paneer block"
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
+    function updatePositions() {
+      // Move player paddle
+      const paddleSpeed = 6;
+      if (moveUpActive) {
+        leftPaddleY -= paddleSpeed;
+      } 
+      if (moveDownActive) {
+        leftPaddleY += paddleSpeed;
+      }
 
-    // Simple AI for right paddle (computer)
-    // Moves paddle's center toward the ball's center
-    let paddleCenter = rightPaddleY + paddleHeight / 2;
-    if (paddleCenter < ballY) {
-      rightPaddleY += 3.5;
-    } else if (paddleCenter > ballY) {
-      rightPaddleY -= 3.5;
-    }
-    // Clamp the computer's paddle
-    if (rightPaddleY < 0) rightPaddleY = 0;
-    if (rightPaddleY + paddleHeight > GAME_HEIGHT) {
-      rightPaddleY = GAME_HEIGHT - paddleHeight;
-    }
-  }
+      // Clamp paddle
+      if (leftPaddleY < 0) leftPaddleY = 0;
+      if (leftPaddleY + paddleHeight > GAME_HEIGHT) {
+        leftPaddleY = GAME_HEIGHT - paddleHeight;
+      }
 
-  function checkCollisions() {
-    // Bounce the paneer block off top/bottom
-    if (ballY <= 0) {
-      ballSpeedY = -ballSpeedY;
-      ballY = 0;
-    } else if (ballY + ballHeight >= GAME_HEIGHT) {
-      ballSpeedY = -ballSpeedY;
-      ballY = GAME_HEIGHT - ballHeight;
-    }
+      // Move the "paneer block"
+      ballX += ballSpeedX;
+      ballY += ballSpeedY;
 
-    // Check left paddle collision
-    if (
-      ballX <= leftPaddleX + paddleWidth &&
-      ballX + ballWidth >= leftPaddleX &&
-      ballY + ballHeight >= leftPaddleY &&
-      ballY <= leftPaddleY + paddleHeight
-    ) {
-      ballSpeedX = -ballSpeedX;
-      ballX = leftPaddleX + paddleWidth; // reposition to avoid stuck
+      // Simple AI for right paddle (computer)
+      // Moves paddle's center toward the ball's center
+      let paddleCenter = rightPaddleY + paddleHeight / 2;
+      if (paddleCenter < ballY) {
+        rightPaddleY += 3.5;
+      } else if (paddleCenter > ballY) {
+        rightPaddleY -= 3.5;
+      }
+      // Clamp the computer's paddle
+      if (rightPaddleY < 0) rightPaddleY = 0;
+      if (rightPaddleY + paddleHeight > GAME_HEIGHT) {
+        rightPaddleY = GAME_HEIGHT - paddleHeight;
+      }
     }
 
-    // Check right paddle collision
-    if (
-      ballX + ballWidth >= rightPaddleX &&
-      ballX <= rightPaddleX + paddleWidth &&
-      ballY + ballHeight >= rightPaddleY &&
-      ballY <= rightPaddleY + paddleHeight
-    ) {
-      ballSpeedX = -ballSpeedX;
-      ballX = rightPaddleX - ballWidth; // reposition to avoid stuck
+    function checkCollisions() {
+      // Bounce the paneer block off top/bottom
+      if (ballY <= 0) {
+        ballSpeedY = -ballSpeedY;
+        ballY = 0;
+      } else if (ballY + ballHeight >= GAME_HEIGHT) {
+        ballSpeedY = -ballSpeedY;
+        ballY = GAME_HEIGHT - ballHeight;
+      }
+
+      // Check left paddle collision
+      if (
+        ballX <= leftPaddleX + paddleWidth &&
+        ballX + ballWidth >= leftPaddleX &&
+        ballY + ballHeight >= leftPaddleY &&
+        ballY <= leftPaddleY + paddleHeight
+      ) {
+        ballSpeedX = -ballSpeedX;
+        ballX = leftPaddleX + paddleWidth; // reposition to avoid stuck
+      }
+
+      // Check right paddle collision
+      if (
+        ballX + ballWidth >= rightPaddleX &&
+        ballX <= rightPaddleX + paddleWidth &&
+        ballY + ballHeight >= rightPaddleY &&
+        ballY <= rightPaddleY + paddleHeight
+      ) {
+        ballSpeedX = -ballSpeedX;
+        ballX = rightPaddleX - ballWidth; // reposition to avoid stuck
+      }
+
+      // Check if ball out of left side
+      if (ballX < 0) {
+        computerScore++;
+        resetBall();
+      }
+
+      // Check if ball out of right side
+      if (ballX + ballWidth > GAME_WIDTH) {
+        playerScore++;
+        resetBall();
+      }
+
+      // Check winning condition
+      if (playerScore >= winningScore || computerScore >= winningScore) {
+        endGame();
+      }
     }
 
-    // Check if ball out of left side
-    if (ballX < 0) {
-      computerScore++;
-      resetBall();
-    }
+    /*************************************************************
+     * DRAW ALL GAME OBJECTS
+     *************************************************************/
+    function drawEverything() {
+      // Clear screen
+      ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-    // Check if ball out of right side
-    if (ballX + ballWidth > GAME_WIDTH) {
-      playerScore++;
-      resetBall();
-    }
+      // Draw net or center line if desired (optional)
+      // ...
 
-    // Check winning condition
-    if (playerScore >= winningScore || computerScore >= winningScore) {
-      endGame();
-    }
-  }
+      // Draw left paddle
+      ctx.fillStyle = "#ff6f00"; // Changed from "white" to "#ff6f00"
+      ctx.fillRect(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
 
-  /*************************************************************
-   * DRAW ALL GAME OBJECTS
-   *************************************************************/
-  function drawEverything() {
-    // Clear screen
-    ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+      // Draw right paddle
+      ctx.fillStyle = "#ff6f00"; // Changed from "white" to "#ff6f00"
+      ctx.fillRect(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
 
-    // Draw net or center line if desired (optional)
-    // ...
+      // Draw the "paneer block" labeled "MIRI"
+      ctx.fillStyle = "#ff6f00"; // Changed from "white" to "#ff6f00"
+      ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
 
-    // Draw left paddle
-    ctx.fillStyle = "#ff6f00"; // Changed from "white" to "#ff6f00"
-    ctx.fillRect(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
+      // Draw text "MIRI" on the rectangle
+      ctx.fillStyle = "black"; // text color remains for contrast
+      ctx.font = "bold 12px sans-serif"; // Adjusted font size for better fit
+      ctx.textAlign = "center"; // Center horizontally
+      ctx.textBaseline = "middle"; // Center vertically
+      const text = "MIRI";
+      ctx.fillText(text, ballX + ballWidth / 2, ballY + ballHeight / 2);
 
-    // Draw right paddle
-    ctx.fillStyle = "#ff6f00"; // Changed from "white" to "#ff6f00"
-    ctx.fillRect(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
-
-    // Draw the "paneer block" labeled "MIRI"
-    ctx.fillStyle = "#ff6f00"; // Changed from "white" to "#ff6f00"
-    ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
-
-    // Draw text "MIRI" on the rectangle
-    ctx.fillStyle = "black"; // text color remains for contrast
-    ctx.font = "bold 12px sans-serif"; // Adjusted font size for better fit
-    ctx.textAlign = "center"; // Center horizontally
-    ctx.textBaseline = "middle"; // Center vertically
-    const text = "MIRI";
-    ctx.fillText(text, ballX + ballWidth / 2, ballY + ballHeight / 2);
-
-    // Display scores with labels
-    ctx.fillStyle = "#ff6f00"; // Changed score text color to match paddles and ball
-    ctx.font = "16px 'Rubik', sans-serif"; // Updated to use Rubik font
-    ctx.textAlign = "left";
-    ctx.textBaseline = "top";
-    ctx.fillText(`You: ${playerScore}`, 20, 20);
-
-    ctx.textAlign = "right";
-    ctx.fillText(`Computer: ${computerScore}`, GAME_WIDTH - 20, 20);
-
-    // Draw Logo in the center if loaded
-    if (logoLoaded) {
-      const logoWidth = 100; // Adjust the width as needed
-      const logoHeight = 100; // Adjust the height as needed
-      const logoX = (GAME_WIDTH - logoWidth) / 2;
-      const logoY = (GAME_HEIGHT - logoHeight) / 2;
-      ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
-
-      // Draw "MIRI PONG" below the logo
-      ctx.font = "900 24px 'Rubik', sans-serif"; // Use Rubik font with weight 900
-      ctx.fillStyle = "#ff6f00"; // Match the theme color
-      ctx.textAlign = "center";
+      // Display scores with labels
+      ctx.fillStyle = "#ff6f00"; // Changed score text color to match paddles and ball
+      ctx.font = "16px 'Rubik', sans-serif"; // Updated to use Rubik font
+      ctx.textAlign = "left";
       ctx.textBaseline = "top";
-      ctx.fillText("MIRI PONG", GAME_WIDTH / 2, logoY + logoHeight + 10); // Position below the logo
+      ctx.fillText(`You: ${playerScore}`, 20, 20);
+
+      ctx.textAlign = "right";
+      ctx.fillText(`Computer: ${computerScore}`, GAME_WIDTH - 20, 20);
+
+      // Draw Logo in the center if loaded
+      if (logoLoaded) {
+        const logoWidth = 100; // Adjust the width as needed
+        const logoHeight = 100; // Adjust the height as needed
+        const logoX = (GAME_WIDTH - logoWidth) / 2;
+        const logoY = (GAME_HEIGHT - logoHeight) / 2;
+        ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+
+        // Draw "MIRI PONG" below the logo
+        ctx.font = "900 24px 'Rubik', sans-serif"; // Use Rubik font with weight 900
+        ctx.fillStyle = "#ff6f00"; // Match the theme color
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillText("MIRI PONG", GAME_WIDTH / 2, logoY + logoHeight + 10); // Position below the logo
+      }
+
+      // Optionally display "PAUSED" if paused
+      if (paused && !gameOver) {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+        ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        ctx.fillStyle = "#ff6f00"; // Changed paused text color to match theme
+        ctx.font = "24px 'Rubik', sans-serif"; // Use Rubik font for consistency
+        ctx.textAlign = "center"; // Ensure center alignment
+        ctx.textBaseline = "middle"; // Ensure middle alignment
+        ctx.fillText("PAUSED", GAME_WIDTH / 2, GAME_HEIGHT / 2);
+      }
     }
 
-    // Optionally display "PAUSED" if paused
-    if (paused && !gameOver) {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-      ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-      ctx.fillStyle = "#ff6f00"; // Changed paused text color to match theme
-      ctx.font = "24px 'Rubik', sans-serif"; // Use Rubik font for consistency
-      ctx.textAlign = "center"; // Ensure center alignment
-      ctx.textBaseline = "middle"; // Ensure middle alignment
-      ctx.fillText("PAUSED", GAME_WIDTH / 2, GAME_HEIGHT / 2);
+    /*************************************************************
+     * HELPER FUNCTIONS
+     *************************************************************/
+    function resetBall() {
+      // Reset paneer block position in the center
+      ballX = GAME_WIDTH / 2 - ballWidth / 2;
+      ballY = GAME_HEIGHT / 2 - ballHeight / 2;
+      // Reverse direction to the opposite side
+      ballSpeedX = -ballSpeedX;
+      ballSpeedY = (Math.random() > 0.5 ? 1 : -1) * 3;
     }
-  }
 
-  /*************************************************************
-   * HELPER FUNCTIONS
-   *************************************************************/
-  function resetBall() {
-    // Reset paneer block position in the center
-    ballX = GAME_WIDTH / 2 - ballWidth / 2;
-    ballY = GAME_HEIGHT / 2 - ballHeight / 2;
-    // Reverse direction to the opposite side
-    ballSpeedX = -ballSpeedX;
-    ballSpeedY = (Math.random() > 0.5 ? 1 : -1) * 3;
-  }
-
-  function resetPaddlesAndScore() {
-    leftPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
-    rightPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
-    playerScore = 0;
-    computerScore = 0;
-    gameOver = false;
-  }
-
-  function endGame() {
-    gameOver = true;
-    paused = true;
-    finalScoreEl.innerText = `Final Score: You ${playerScore} - Computer ${computerScore}`;
-    overlay.style.display = "flex";
-  }
-
-  /*************************************************************
-   * EVENT HANDLERS
-   *************************************************************/
-  // Handle "Start New Game" button
-  startButton.addEventListener("click", () => {
-    resetPaddlesAndScore();
-    resetBall();
-    overlay.style.display = "none";
-    finalScoreEl.innerText = "";
-    paused = false;
-  });
-
-  // Keyboard Controls
-  window.addEventListener("keydown", (e) => {
-    switch (e.key) {
-      case "ArrowUp":
-      case "w":
-      case "W":
-        moveUpActive = true;
-        break;
-      case "ArrowDown":
-      case "s":
-      case "S":
-        moveDownActive = true;
-        break;
-      case " ": // Space bar - pause/unpause
-        togglePause();
-        break;
+    function resetPaddlesAndScore() {
+      leftPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
+      rightPaddleY = GAME_HEIGHT / 2 - paddleHeight / 2;
+      playerScore = 0;
+      computerScore = 0;
+      gameOver = false;
     }
-  });
 
-  window.addEventListener("keyup", (e) => {
-    switch (e.key) {
-      case "ArrowUp":
-      case "w":
-      case "W":
-        moveUpActive = false;
-        break;
-      case "ArrowDown":
-      case "s":
-      case "S":
-        moveDownActive = false;
-        break;
+    function endGame() {
+      gameOver = true;
+      paused = true;
+      finalScoreEl.innerText = `Final Score: You ${playerScore} - Computer ${computerScore}`;
+      overlay.style.display = "flex";
     }
-  });
 
-  // Touch/mouse controls - tap game area to pause
-  canvas.addEventListener("click", togglePause);
-  canvas.addEventListener("touchstart", (e) => {
-    // If user taps the canvas, pause/unpause
-    e.preventDefault();
-    togglePause();
-  });
+    /*************************************************************
+     * EVENT HANDLERS
+     *************************************************************/
+    // Handle "Start New Game" button
+    startButton.addEventListener("click", () => {
+      resetPaddlesAndScore();
+      resetBall();
+      overlay.style.display = "none";
+      finalScoreEl.innerText = "";
+      paused = false;
+    });
 
-  // Mobile/Accessibility Buttons
-  moveUpBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    moveUpActive = true;
-  });
-  moveUpBtn.addEventListener("touchend", (e) => {
-    e.preventDefault();
-    moveUpActive = false;
-  });
-  moveUpBtn.addEventListener("mousedown", () => {
-    moveUpActive = true;
-  });
-  moveUpBtn.addEventListener("mouseup", () => {
-    moveUpActive = false;
-  });
-  // Similarly for Down
-  moveDownBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    moveDownActive = true;
-  });
-  moveDownBtn.addEventListener("touchend", (e) => {
-    e.preventDefault();
-    moveDownActive = false;
-  });
-  moveDownBtn.addEventListener("mousedown", () => {
-    moveDownActive = true;
-  });
-  moveDownBtn.addEventListener("mouseup", () => {
-    moveDownActive = false;
-  });
+    // Keyboard Controls
+    window.addEventListener("keydown", (e) => {
+      switch (e.key) {
+        case "ArrowUp":
+        case "w":
+        case "W":
+          moveUpActive = true;
+          break;
+        case "ArrowDown":
+        case "s":
+        case "S":
+          moveDownActive = true;
+          break;
+        case " ": // Space bar - pause/unpause
+          togglePause();
+          break;
+      }
+    });
 
-  // Pause function
-  function togglePause() {
-    if (gameOver) return; // can't toggle pause if game is over
-    paused = !paused;
-  }
+    window.addEventListener("keyup", (e) => {
+      switch (e.key) {
+        case "ArrowUp":
+        case "w":
+        case "W":
+          moveUpActive = false;
+          break;
+        case "ArrowDown":
+        case "s":
+        case "S":
+          moveDownActive = false;
+          break;
+      }
+    });
 
-  // Start the rendering loop
-  requestAnimationFrame(gameLoop);
+    // Touch/mouse controls - tap game area to pause
+    canvas.addEventListener("click", togglePause);
+    canvas.addEventListener("touchstart", (e) => {
+      // If user taps the canvas, pause/unpause
+      e.preventDefault();
+      togglePause();
+    });
 
-</script>
+    // Mobile/Accessibility Buttons
+    moveUpBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveUpActive = true;
+    });
+    moveUpBtn.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      moveUpActive = false;
+    });
+    moveUpBtn.addEventListener("mousedown", () => {
+      moveUpActive = true;
+    });
+    moveUpBtn.addEventListener("mouseup", () => {
+      moveUpActive = false;
+    });
+    // Similarly for Down
+    moveDownBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveDownActive = true;
+    });
+    moveDownBtn.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      moveDownActive = false;
+    });
+    moveDownBtn.addEventListener("mousedown", () => {
+      moveDownActive = true;
+    });
+    moveDownBtn.addEventListener("mouseup", () => {
+      moveDownActive = false;
+    });
+
+    // Pause function
+    function togglePause() {
+      if (gameOver) return; // can't toggle pause if game is over
+      paused = !paused;
+    }
+
+    // Start the rendering loop
+    requestAnimationFrame(gameLoop);
+
+  </script>
+
+  <!-- Link to external JavaScript -->
+  <script src="scripts.js"></script>
+  <!-- Mixpanel tracking script -->
+  <script>
+    if (log_mixpanel) {
+      mixpanel.track("Pong – Page View");
+
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mixpanel.track("Pong – Link Click", { href: link.href });
+          });
+        });
+      });
+    }
+  </script>
 </body>
 </html>
