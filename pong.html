@@ -41,10 +41,19 @@
 
     #gameContainer {
       position: relative;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      border-radius: 8px;
       width: 90vw;
       max-width: 800px;
       margin-top: 20px;
-      /* Maintain a 3:2 aspect ratio for the canvas area; adjust as desired */
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center items horizontally */
+      padding: 20px; /* Optional: Adds padding around the content */
+      box-sizing: border-box; /* Ensure padding doesn't affect width */
+      border-radius: 10px; /* Optional: Adds rounded corners to the container */
     }
 
     #gameCanvas {
@@ -109,20 +118,20 @@
     /* ========== MOBILE/DESKTOP CONTROL BUTTONS ========== */
     #controlButtons {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
-      margin-top: 10px;
-      position: fixed; /* Keeps buttons fixed at the bottom */
-      bottom: 20px;    /* Distance from the bottom */
-      left: 50%;       /* Center horizontally */
-      transform: translateX(-50%); /* Adjust for centering */
+      width: 100%; /* Make buttons container fill the width of gameContainer */
+      margin-top: 20px;
+      /* Removed position: fixed and related properties */
     }
 
     #controlButtons button {
+      flex: 1; /* Allow buttons to grow and fill available space */
+      margin: 0 10px; /* Add horizontal spacing between buttons */
       background-color: #ff6f00; /* Changed from #444 to #ff6f00 */
       color: #fff;
       border: none;
-      padding: 20px 40px; /* Increased horizontal padding for width 2x height */
+      padding: 15px 0; /* Vertical padding only for consistent height */
       font-size: 2rem;    /* from previous change */
       cursor: pointer;
       border-radius: 5px;
@@ -133,20 +142,15 @@
       background-color: #e65c00; /* Slightly darker on hover */
     }
 
-    /* === Added line below to create a gap between the two buttons === */
-    #controlButtons button + button {
-      margin-left: 40px;
-    }
-
     /* Optional: Responsive Adjustments */
     @media (max-width: 600px) {
       #controlButtons button {
-        padding: 15px 30px; /* Adjusted for smaller screens */
+        padding: 10px 0; /* Adjusted for smaller screens */
         font-size: 1.5rem;
       }
 
       #controlButtons button + button {
-        margin-left: 20px;
+        margin-left: 0; /* Removed additional margin */
       }
 
       #startButton {
@@ -162,6 +166,12 @@
     <!-- The Canvas where the Pong game is rendered -->
     <canvas id="gameCanvas"></canvas>
 
+    <!-- Optional Up/Down Control Buttons for mobile and accessibility -->
+    <div id="controlButtons">
+      <button id="moveUp">▲</button>
+      <button id="moveDown">▼</button>
+    </div>
+
     <!-- Overlay for Start/New Game and showing final score -->
     <div id="overlay">
       <div id="overlayContent">
@@ -169,18 +179,11 @@
         <button id="startButton">Start New Game</button>
       </div>
     </div>
-
-
-    <!-- Optional Up/Down Control Buttons for mobile and accessibility -->
-    <div id="controlButtons">
-      <button id="moveUp">▲</button>
-      <button id="moveDown">▼</button>
-    </div>
   </div>
 
   <div id="copyrightContainer">
     Mahi Foods LLC DBA Miri Foods © <span id="current-year"></span><br />
-    <a href= 'index.html'>Order From Miri Foods</a>
+    <a href='index.html'>Order From Miri Foods</a>
   </div>
 
   <script>
